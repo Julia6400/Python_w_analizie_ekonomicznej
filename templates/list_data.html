@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 6px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<title>Wypisywanie wynikow</title>
+<p><a href="/upload"> Upload</a>
+<a href="/pliki"> Pliki</a></p>
+<h1>Dane pliku</h1>
+<table border="1" >
+    <thead>
+        <tr>
+            <th>Nazwa pliku</th>
+  	    <th>Typy</th>
+            <th>Ilosc kolumn</th>
+            <th>Ilosc wierszy</th>
+            <th>Ilosc rekordow</th>
+		
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in slownik_query["dane_pliku"] %}
+            <tr>
+                <th>{{i.file_name}}</th>
+		<td>{{i.typy}}</td>
+                <td>{{i.columns}}</td>
+                <td>{{i.rows}}</td>
+                <td>{{i.records_nmbr}}</td>
+		
+            </tr>
+            {% endfor %}
+
+    </tbody>
+
+</table>
+
+<h1>Dane kolumn</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nazwa kolumny</th>
+            <th>Typ danych</th>
+            <th>Ilosc wartosci unikalnych</th>
+            <th>Ilosc wartosci pustych</th>
+            <th>Ilosc wartosci "NaN"</th>
+            <th>Wartosc minimalna</th>
+            <th>Srednia</th>
+            <th>Wartosc maksymalna</th>
+            <th>Mediana</th>
+            <th>Odch. std.</th>
+	    <th>Pierwsza data</th>
+            <th>Ostatnia data</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for i in slownik_query["daneD"] %}
+            <tr>
+                <td>{{i.column_name if i.column_name is not none else "-"}}</td>
+                <td>{{i.dtype if i is not none else "-"}}</td>
+                <td>{{i.unique_values if i.unique_values is not none else "-"}}</td>
+                <td>{{i.empty_values if i.empty_values is not none else "-"}}</td>
+		<td>{{i.nan_values if i.nan_values is not none else "-"}}</td>
+                <td>{{i.min_value if i.min_value is not none else "-"}}</td>
+		<td>{{i.mean_value if i.mean_value is not none else "-"}}</td>
+		<td>{{i.max_value if i.max_value is not none else "-"}}</td>
+		<td>{{i.median_value if i.median_value is not none else "-"}}</td>
+		<td>{{i.std_dev_value if i.std_dev_value is not none else "-"}}</td>
+		<td>{{i.min_date if i.min_date is not none else "-"}}</td>
+		<td>{{i.max_date if i.max_date is not none else "-"}}</td>
+
+            </tr>
+            {% endfor %}
+
+<a href='/pliki/<string:nazwa_pliku>/<string:nazwa_histogramy>'</a>
+    </tbody>
+</table>
